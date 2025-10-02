@@ -42,6 +42,8 @@ class GeckoInMixZone(GeckoLight):
             self.set_availability(is_available=True)
         else:
             return
+        
+        self._inmix = inmix
 
         self._synchro_accessor: GeckoEnumStructAccessor = self.facade.spa.accessors[
             f"InMix-Synchro{zone}"
@@ -159,7 +161,7 @@ class GeckoInMixZone(GeckoLight):
         await self._blue_accessor.async_set_value(int(rgb[2] * br / 255))
         
         # Trigger the struct update and wait for it to complete
-        self._update_event.set()
+        self._inmix._update_event.set()
         # Give a small delay to ensure the update task processes the event
         await asyncio.sleep(0.1)
         
