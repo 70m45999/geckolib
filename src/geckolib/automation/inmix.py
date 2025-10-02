@@ -157,6 +157,12 @@ class GeckoInMixZone(GeckoLight):
         await self._red_accessor.async_set_value(int(rgb[0] * br / 255))
         await self._green_accessor.async_set_value(int(rgb[1] * br / 255))
         await self._blue_accessor.async_set_value(int(rgb[2] * br / 255))
+        
+        # Trigger the struct update and wait for it to complete
+        self._update_event.set()
+        # Give a small delay to ensure the update task processes the event
+        await asyncio.sleep(0.1)
+        
         self._ignore_changes = False
         self._on_change()
 
