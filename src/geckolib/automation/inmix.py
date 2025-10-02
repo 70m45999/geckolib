@@ -166,7 +166,7 @@ class GeckoInMixZone(GeckoLight):
         await asyncio.sleep(0.1)
         
         self._ignore_changes = False
-        self._on_change()
+        # Don't call _on_change() here as it would trigger _get_inmix() and overwrite our values
 
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn the light ON, but does nothing if it is already ON."""
