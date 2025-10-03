@@ -156,6 +156,10 @@ class GeckoInMixZone(GeckoLight):
         await self._mode_accessor.async_set_value("RGB")
         rgb = self._rgb
         br = self._brightness
+        # When using manual RGB, the controller expects Color to be NO_COLOR
+        # and Speed is irrelevant; normalize to PRESET to avoid conflicts.
+        await self._color_accessor.async_set_value("NO_COLOR")
+        await self._speed_accessor.async_set_value("PRESET")
         await self._red_accessor.async_set_value(int(rgb[0] * br / 255))
         await self._green_accessor.async_set_value(int(rgb[1] * br / 255))
         await self._blue_accessor.async_set_value(int(rgb[2] * br / 255))
